@@ -81,6 +81,8 @@ class Keyframe:
             folder, "{}/{}.json".format(CaptureArtifact.CORRECTED_CAMERAS.value, timestamp))
         self.depth_path = os.path.join(
             folder, "{}/{}.png".format(CaptureArtifact.DEPTH_MAPS.value, timestamp))
+        self.confidence_path = os.path.join(
+            folder, "{}/{}.png".format(CaptureArtifact.CONFIDENCE_MAPS.value, timestamp))
         self.camera = Camera(self.get_best_camera_json(), rotate)
 
     def is_valid(self) -> bool:
