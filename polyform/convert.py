@@ -6,9 +6,11 @@ Created by Chris Heinrich on Tuesday, 1st November 2022
 Copyright © 2022 Polycam Inc. All rights reserved.
 '''
 import fire
-from polyform.utils.logging import logger
+import logging
 from polyform.core.capture_folder import CaptureFolder
 from polyform.convertors.instant_ngp import InstantNGPConvertor
+
+_log = logging.getLogger(__name__)
 
 
 def convert(data_folder_path: str, format: str = "ingp"):
@@ -22,7 +24,7 @@ def convert(data_folder_path: str, format: str = "ingp"):
     if format.lower() == "ingp" or format.lower() == "instant-ngp":
         convertor = InstantNGPConvertor()
     else:
-        logger.error("Format {} is not curently supported. Consider adding a convertor for it".format(format))
+        _log.error("Format {} is not curently supported. Consider adding a convertor for it".format(format))
         exit(1)
     convertor.convert(folder)
 

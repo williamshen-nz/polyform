@@ -7,11 +7,14 @@ Copyright © 2022 Polycam Inc. All rights reserved.
 '''
 import os
 import json
+import logging
 import numpy as np
 from PIL import Image
-from polyform.utils.logging import logger
 from polyform.core.capture_folder import *
 from polyform.convertors.convertor_interface import ConvertorInterface
+
+_log = logging.getLogger(__name__)
+
 
 class InstantNGPConvertor(ConvertorInterface):
     """Converts Polycam data to the format expected by Instant-NGP"""
@@ -31,7 +34,7 @@ class InstantNGPConvertor(ConvertorInterface):
         data = {}
         keyframes = folder.get_keyframes(rotate=True)
         if len(keyframes) == 0:
-            logger.error("Capture folder does not have any data! Aborting conversion to Instant NGP")
+            _log.error("Capture folder does not have any data! Aborting conversion to Instant NGP")
             return
         """
         NOTE
@@ -76,7 +79,7 @@ class InstantNGPConvertor(ConvertorInterface):
         output_file_path = os.path.join(folder.root, "transforms.json")
         with open(output_file_path, "w") as f:
             json.dump(data, f, indent=2)
-        logger.info("Successfuly wrote the data to {}".format(output_file_path))
+        _log.info("Successfuly wrote the data to {}".format(output_file_path))
 
     def _convert_keyframe(self, keyframe: Keyframe, folder: CaptureFolder) -> dict:
         """ Converts Polycam keyframe into a dictionary to be serialized as json """

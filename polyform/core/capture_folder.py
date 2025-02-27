@@ -16,11 +16,13 @@ working with a raw Polycam dataset.
 
 import os
 import json
+import logging
 import numpy as np
 from polyform.core.bbox import BBox3D, bbox_from_points
-from polyform.utils.logging import logger
 from enum import Enum
 from typing import List
+
+_log = logging.getLogger(__name__)
 
 
 class CaptureArtifact(Enum):
@@ -117,7 +119,7 @@ class CaptureFolder:
         self.root = root
         self.id = os.path.basename(os.path.normpath(root))
         if not self.has_optimized_poses():
-            logger.warning("Camera poses have not been optimized, the ARKit poses will be used as a fallback")
+            _log.warning("Camera poses have not been optimized, the ARKit poses will be used as a fallback")
 
     def get_artifact_path(self, artifact: CaptureArtifact) -> str:
         return os.path.join(self.root, artifact.value)
